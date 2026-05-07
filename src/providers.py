@@ -33,7 +33,7 @@ def create_llm():
     if provider == "gemini":
         from langchain_google_genai import ChatGoogleGenerativeAI
 
-        return ChatGoogleGenerativeAI(model="gemini-2.0-flash")
+        return ChatGoogleGenerativeAI(model="gemini-2.5-flash")
 
     from langchain_openai import ChatOpenAI
 

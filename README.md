@@ -125,6 +125,6 @@ pytest
 O provider é controlado pela variável `LLM_PROVIDER` no `.env`:
 
 - `LLM_PROVIDER=openai` (padrão): Usa OpenAI (`text-embedding-3-small` + `gpt-5-nano`)
-- `LLM_PROVIDER=gemini`: Usa Google Gemini (`models/embedding-001` + `gemini-2.0-flash`)
+- `LLM_PROVIDER=gemini`: Usa Google Gemini (`models/gemini-embedding-001` + `gemini-2.5-flash`)
 
 A lógica de seleção está centralizada em `src/providers.py`.
