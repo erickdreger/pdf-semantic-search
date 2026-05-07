@@ -3,8 +3,9 @@
 import os
 
 from dotenv import load_dotenv
-from langchain_openai import OpenAIEmbeddings
 from langchain_postgres import PGVector
+
+from src.providers import create_embeddings
 
 load_dotenv()
 
@@ -13,7 +14,7 @@ def get_vector_store():
     """Retorna a instância do PGVector conectada ao banco."""
     database_url = os.getenv("DATABASE_URL")
     collection_name = os.getenv("COLLECTION_NAME", "pdf_documents")
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
+    embeddings = create_embeddings()
     return PGVector(
         embeddings=embeddings,
         collection_name=collection_name,

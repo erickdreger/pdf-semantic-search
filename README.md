@@ -6,11 +6,12 @@ Projeto de IA para ingestão de PDF e busca semântica usando LangChain, Postgre
 
 - Leitura e processamento de arquivos PDF
 - Divisão do conteúdo em chunks otimizados (1000 caracteres, overlap de 150)
-- Geração de embeddings com OpenAI (`text-embedding-3-small`)
+- Geração de embeddings com OpenAI (`text-embedding-3-small`) ou Gemini (`models/embedding-001`)
 - Armazenamento vetorial no PostgreSQL com pgVector
 - Busca semântica com similaridade vetorial
 - Chat CLI para perguntas sobre o conteúdo do PDF
 - Respostas restritas ao conteúdo do documento (sem invenção de informações)
+- Suporte a múltiplos providers (OpenAI e Gemini) via variável de ambiente
 
 ## Tecnologias
 
@@ -18,7 +19,7 @@ Projeto de IA para ingestão de PDF e busca semântica usando LangChain, Postgre
 - LangChain
 - PostgreSQL + pgVector
 - Docker / Docker Compose
-- OpenAI (embeddings + LLM)
+- OpenAI (embeddings + LLM) ou Google Gemini
 
 ## Estrutura do Projeto
 
@@ -29,7 +30,8 @@ Projeto de IA para ingestão de PDF e busca semântica usando LangChain, Postgre
 ├── src/
 │   ├── ingest.py
 │   ├── search.py
-│   └── chat.py
+│   ├── chat.py
+│   └── providers.py
 ├── tests/
 │   ├── test_prompt.py
 │   └── test_splitter.py
@@ -61,10 +63,18 @@ Copie o arquivo de exemplo e preencha com suas credenciais:
 cp .env.example .env
 ```
 
-Edite o `.env` e adicione sua chave da OpenAI:
+Edite o `.env` e configure o provider desejado:
 
 ```
+# Para OpenAI:
 OPENAI_API_KEY=sua-chave-aqui
+LLM_PROVIDER=openai
+
+# Para Gemini:
+GOOGLE_API_KEY=sua-chave-aqui
+LLM_PROVIDER=gemini
+
+# Configurações do banco:
 DATABASE_URL=postgresql+psycopg://postgres:postgres@localhost:5432/vectordb
 COLLECTION_NAME=pdf_documents
 PDF_PATH=document.pdf
@@ -110,6 +120,11 @@ pytest
 - Perguntas fora do contexto retornam:
   > "Não tenho informações necessárias para responder sua pergunta."
 
-## Preparação para Gemini
+## Troca de Provider (OpenAI / Gemini)
 
-O projeto está estruturado para facilitar a troca futura do provider de LLM/embeddings para Google Gemini (`langchain-google-genai`). A dependência já está incluída no `requirements.txt`.
+O provider é controlado pela variável `LLM_PROVIDER` no `.env`:
+
+- `LLM_PROVIDER=openai` (padrão): Usa OpenAI (`text-embedding-3-small` + `gpt-5-nano`)
+- `LLM_PROVIDER=gemini`: Usa Google Gemini (`models/embedding-001` + `gemini-2.0-flash`)
+
+A lógica de seleção está centralizada em `src/providers.py`.

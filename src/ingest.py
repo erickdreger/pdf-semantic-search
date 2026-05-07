@@ -5,9 +5,10 @@ import sys
 
 from dotenv import load_dotenv
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_openai import OpenAIEmbeddings
 from langchain_postgres import PGVector
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+
+from src.providers import create_embeddings
 
 load_dotenv()
 
@@ -28,11 +29,6 @@ def split_documents(documents):
         chunk_overlap=150,
     )
     return splitter.split_documents(documents)
-
-
-def create_embeddings():
-    """Cria a instância de embeddings da OpenAI."""
-    return OpenAIEmbeddings(model="text-embedding-3-small")
 
 
 def create_vector_store(embeddings):

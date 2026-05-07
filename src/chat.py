@@ -1,20 +1,13 @@
 """Chat CLI para busca semântica no conteúdo do PDF."""
 
-import os
-
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 
+from src.providers import create_llm
 from src.search import build_prompt, format_context, search_documents
 
 load_dotenv()
 
 EXIT_COMMANDS = {"exit", "quit", "sair"}
-
-
-def create_llm():
-    """Cria a instância da LLM."""
-    return ChatOpenAI(model="gpt-5-nano")
 
 
 def ask(question: str, llm) -> str:
