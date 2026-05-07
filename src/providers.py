@@ -19,7 +19,7 @@ def create_embeddings():
     if provider == "gemini":
         from langchain_google_genai import GoogleGenerativeAIEmbeddings
 
-        return GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+        return GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
     from langchain_openai import OpenAIEmbeddings
 
