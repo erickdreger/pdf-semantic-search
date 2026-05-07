@@ -14,7 +14,7 @@ EXIT_COMMANDS = {"exit", "quit", "sair"}
 
 def create_llm():
     """Cria a instância da LLM."""
-    return ChatOpenAI(model="gpt-4.1-nano")
+    return ChatOpenAI(model="gpt-5-nano")
 
 
 def ask(question: str, llm) -> str:
