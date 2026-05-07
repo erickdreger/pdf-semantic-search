@@ -1,5 +1,10 @@
 """Chat CLI para busca semântica no conteúdo do PDF."""
 
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
 from dotenv import load_dotenv
 
 from src.providers import create_llm

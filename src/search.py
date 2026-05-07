@@ -1,6 +1,9 @@
 """Módulo de busca semântica no banco vetorial."""
 
 import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from dotenv import load_dotenv
 from langchain_postgres import PGVector
